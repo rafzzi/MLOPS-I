@@ -34,10 +34,11 @@ def sentimento(frase):
     return f'Polaridade: {polaridade}'
 
 @app.route('/cotacao/', methods=['POST'])
+@basic_auth.required
 def cotacao():
     dados = request.get_json()
     dados_input = [dados[col] for col in colunas]
     predicao = lr.predict(scaler.transform([dados_input]))
     return jsonify(preco=predicao[0])
 
-app.run(debug=True)
+app.run(debug=True) 
